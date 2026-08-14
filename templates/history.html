@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume History</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-card history-card">
+
+        <img src="{{ url_for('static', filename='images/resume4.png') }}" class="logo">
+
+        <h1>📄 Resume History</h1>
+
+        <p>Previously Analyzed Resumes</p>
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="🔍 Search Resume..."
+            onkeyup="searchResume()">
+
+        <br><br>
+
+        <table class="history-table" id="historyTable">
+
+            <tr>
+                <th>ID</th>
+                <th>Resume Name</th>
+                <th>Score</th>
+                <th>Upload Date</th>
+                <th>Status</th>
+                <th>Selected For</th>
+                <th>View</th>
+            </tr>
+
+            {% for record in records %}
+
+            <tr>
+
+                <td>{{ record[0] }}</td>
+
+                <td>{{ record[1] }}</td>
+
+                <td>
+                    <span class="score">
+                        {{ record[2] }}%
+                    </span>
+                </td>
+
+                <td>{{ record[3] }}</td>
+
+                <td>
+
+                    {% if record[5] == "Pending" %}
+
+                        <span class="badge pending">
+                            ⏳ Pending
+                        </span>
+
+                    {% elif record[5] == "Selected" %}
+
+                        <span class="badge selected">
+                            ✅ Selected
+                        </span>
+
+                    {% elif record[5] == "Rejected" %}
+
+                        <span class="badge rejected">
+                            ❌ Rejected
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>{{ record[6] }}</td>
+
+                <td>
+                    <a href="/view/{{ record[0] }}" class="view-btn">
+                        👁 View
+                    </a>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <br>
+
+        <a href="/dashboard">
+            <button class="register-btn">
+                ⬅ Back to Dashboard
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+function searchResume(){
+
+    let input = document.getElementById("searchInput");
+    let filter = input.value.toUpperCase();
+
+    let table = document.getElementById("historyTable");
+    let tr = table.getElementsByTagName("tr");
+
+    for(let i=1;i<tr.length;i++){
+
+        let td = tr[i].getElementsByTagName("td")[1];
+
+        if(td){
+
+            let txt = td.textContent || td.innerText;
+
+            if(txt.toUpperCase().indexOf(filter) > -1){
+
+                tr[i].style.display="";
+
+            }else{
+
+                tr[i].style.display="none";
+
+            }
+
+        }
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AI Resume Analyzer</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <img src="{{ url_for('static', filename='images/resume3.png') }}"
+             alt="Logo"
+             class="sidebar-logo">
+
+        <h2>AI Resume</h2>
+
+        <ul>
+            <li><a href="/dashboard">🏠 Dashboard</a></li>
+            <li><a href="#upload">📄 Upload Resume</a></li>
+            <li><a href="/result">📊 Resume Score</a></li>
+            <li><a href="/history">📜 Resume History</a></li>
+            <li>
+    <a href="/hrlogin">👨‍💼 HR Login</a>
+</li>
+            <li><a href="/logout">🚪 Logout</a></li>
+        </ul>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <h1>Welcome, {{ username }} 👋</h1>
+        <p>Your AI Career Assistant Dashboard</p>
+
+        <div class="cards">
+
+            <!-- Total Users -->
+            <div class="card">
+                <h2>👥 Total Users</h2>
+                <h1>{{ total_users }}</h1>
+            </div>
+
+            <!-- Total Resumes -->
+            <div class="card">
+                <h2>📄 Total Resumes</h2>
+                <h1>{{ total_resumes }}</h1>
+            </div>
+
+            <!-- Upload Resume -->
+            <div class="card" id="upload">
+
+                <h2>📄 Upload Resume</h2>
+
+                <p>Upload your resume for AI analysis.</p>
+<a href="/analysis">
+    <button type="button" class="register-btn">
+        Upload Resume
+    </button>
+</a>
+
+            </div>
+
+            <!-- Resume Score -->
+            <div class="card">
+
+                <h2>📊 Resume Score</h2>
+
+                <p>Check your latest resume analysis.</p>
+
+                <a href="/result">
+                    <button class="register-btn">
+                        View Result
+                    </button>
+                </a>
+
+            </div>
+
+            <!-- Resume History -->
+            <div class="card">
+
+                <h2>📜 Resume History</h2>
+
+                <p>View all uploaded resumes and scores.</p>
+
+                <a href="/history">
+                    <button class="register-btn">
+                        View History
+                    </button>
+                </a>
+
+            </div>
+
+            <!-- Job Recommendation -->
+            <div class="card">
+
+                <h2>💼 Job Recommendations</h2>
+
+                <p>
+                    Based on detected skills, AI suggests suitable jobs.
+                </p>
+
+            </div>
+
+            <!-- Skills Analysis -->
+            <div class="card">
+
+                <h2>🧠 Skills Analysis</h2>
+
+                <p>
+                    Analyze strengths, weaknesses and improvements.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>HR Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+<div class="login-card history-card">
+
+<img src="{{ url_for('static', filename='images/resume4.png') }}"
+class="logo">
+
+<h1>👨‍💼 HR Dashboard</h1>
+
+<p>Candidate Selection Panel</p>
+
+<table class="history-table">
+
+<tr>
+
+    <th>ID</th>
+    <th>Resume</th>
+    <th>View</th>
+    <th>Action</th>
+
+</tr>
+
+{% for record in records %}
+
+<tr>
+
+    <td>{{ record[0] }}</td>
+
+    <td>{{ record[1] }}</td>
+
+    <td>
+
+    <a href="/view/{{ record[0] }}?from=hr">
+        <button class="login-btn">
+            👁 View
+        </button>
+    </a>
+
+    </td>
+
+    <td>
+
+        {% if record[4] == "Pending" %}
+
+        <a href="/select/{{ record[0] }}">
+
+            <button class="login-btn">
+
+                ✅ Select
+
+            </button>
+
+        </a>
+
+        <a href="/reject/{{ record[0] }}">
+
+            <button class="register-btn">
+
+                ❌ Reject
+
+            </button>
+
+        </a>
+
+        {% elif record[4] == "Selected" %}
+
+        <span class="badge selected">
+
+            ✅ Candidate Selected
+
+        </span>
+
+        {% elif record[4] == "Rejected" %}
+
+        <span class="badge rejected">
+
+            ❌ Candidate Rejected
+
+        </span>
+
+        {% endif %}
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br><br>
+
+<a href="/selected">
+
+<button class="login-btn">
+
+Selected Candidates
+
+</button>
+
+</a>
+
+<br><br>
+
+<a href="/dashboard">
+
+<button class="register-btn">
+
+Back
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

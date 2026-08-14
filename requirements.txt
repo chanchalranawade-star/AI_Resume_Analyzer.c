@@ -1,0 +1,5 @@
+Flask
+PyPDF2
+reportlab
+gunicorn
+psycopg2-binary

@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result - AI Resume Analyzer</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <img src="{{ url_for('static', filename='images/resume4.png') }}"
+             alt="AI Logo"
+             class="logo">
+
+        <h1>Resume Analysis Result</h1>
+
+        <p>Your AI-powered resume evaluation report.</p>
+
+        <!-- Resume Score -->
+        <div class="result-box">
+
+            <h2>Resume Score</h2>
+
+            <div class="score">
+                {{ score }}%
+            </div>
+
+        </div>
+        <div class="result-box">
+
+    <h2>📊 HR Interview Assessment Report</h2>
+
+    <table border="1" width="100%" cellpadding="10">
+
+        <tr>
+            <th>Category</th>
+            <th>Marks</th>
+        </tr>
+
+        <tr>
+            <td>Communication</td>
+            <td>{{ communication }}/10</td>
+        </tr>
+
+        <tr>
+            <td>Personality</td>
+            <td>{{ personality }}/10</td>
+        </tr>
+
+        <tr>
+            <td>Logical Thinking</td>
+            <td>{{ logical }}/10</td>
+        </tr>
+
+        <tr>
+            <td>Language Skills</td>
+            <td>{{ language_marks }}/10</td>
+        </tr>
+
+        <tr>
+            <td>Technical Skills</td>
+            <td>{{ technical_marks }}/30</td>
+        </tr>
+
+        <tr>
+            <td>Job Readiness</td>
+            <td>{{ job_marks }}/30</td>
+        </tr>
+
+        <tr style="background:#0d6efd;color:white;font-weight:bold;">
+            <td>Total Score</td>
+            <td>{{ score }}/100</td>
+        </tr>
+
+        <tr style="background:#28a745;color:white;font-weight:bold;">
+            <td>Rating</td>
+            <td>{{ rating }}</td>
+        </tr>
+
+    </table>
+
+</div>
+<div class="result-box">
+
+    <h2>Uploaded Resume</h2>
+
+    <p>{{ filename }}</p>
+
+</div>
+        <!-- Skills -->
+        <div class="result-box">
+
+            <h2>Detected Skills</h2>
+
+            <p>
+                {% for skill in skills %}
+                    ✔ {{ skill }}<br>
+                {% endfor %}
+            </p>
+
+        </div>
+<div class="result-box">
+
+    <h2>Weak Skills / Missing Skills</h2>
+
+    <p>
+        {% for skill in weaknesses %}
+            ✖ {{ skill }}<br>
+        {% endfor %}
+    </p>
+
+</div>
+<div class="result-box">
+
+    <h2>Total Skills Found</h2>
+
+    <p>{{ skills|length }}</p>
+
+</div>
+<div class="result-box">
+
+    <h2>Resume Rating</h2>
+
+    <div class="rating">
+        {{ rating }}
+    </div>
+
+</div>
+        <!-- Strengths -->
+        <div class="result-box">
+
+            <h2>Strengths</h2>
+
+            <p>
+                {% for strength in strengths %}
+                    ✔ {{ strength }}<br>
+                {% endfor %}
+            </p>
+
+        </div>
+
+        <!-- Suggestions -->
+        <div class="result-box">
+
+            <h2>AI Suggestions</h2>
+
+            <p>
+                {% for suggestion in suggestions %}
+                    ➤ {{ suggestion }}<br>
+                {% endfor %}
+            </p>
+
+        </div>
+
+        <!-- Recommended Jobs -->
+        <div class="result-box">
+
+            <h2>Recommended Jobs</h2>
+
+            <p>
+                {% for job in jobs %}
+                    💼 {{ job }}<br>
+                {% endfor %}
+            </p>
+
+        </div>
+        <a href="/download_report">
+    <button class="register-btn">
+        📄 Download PDF Report
+    </button>
+</a>
+
+<br><br>
+        <a href="/dashboard">
+            <button class="register-btn">
+                Back to Dashboard
+            </button>
+        </a>
+
+        <p class="register-link">
+            Want to analyze another resume?
+            <a href="/dashboard">Upload Again</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

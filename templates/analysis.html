@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Interview Assessment</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="login-container">
+
+    <div class="login-card analysis-card">
+        <img src="{{ url_for('static', filename='images/hrinterview.jpg') }}"
+     class="hr-image">
+        <h1>🎯 HR Interview Assessment Form</h1>
+
+        <p>
+            Evaluate the candidate's communication, personality and logical
+            thinking, then upload the resume for AI analysis.
+        </p>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+
+
+            <label><b>Communication</b></label><br>
+
+            <select name="communication" required>
+                <option value="">-- Select Rating --</option>
+                <option value="10">Excellent (10/10)</option>
+                <option value="8">Good (8/10)</option>
+                <option value="6">Average (6/10)</option>
+                <option value="4">Poor (4/10)</option>
+            </select>
+
+            <br><br>
+
+            <label><b>Personality</b></label><br>
+
+            <select name="personality" required>
+                <option value="">-- Select Rating --</option>
+                <option value="10">Excellent (10/10)</option>
+                <option value="8">Good (8/10)</option>
+                <option value="6">Average (6/10)</option>
+                <option value="4">Poor (4/10)</option>
+            </select>
+
+            <br><br>
+
+            <label><b>Logical Thinking</b></label><br>
+
+            <select name="logical" required>
+                <option value="">-- Select Rating --</option>
+                <option value="10">Excellent (10/10)</option>
+                <option value="8">Good (8/10)</option>
+                <option value="6">Average (6/10)</option>
+                <option value="4">Poor (4/10)</option>
+            </select>
+
+            <br><br>
+              <label><b>Upload Resume</b></label><br><br>
+
+            <input type="file" name="resume" required>
+
+            <br><br>
+            <button type="submit" class="register-btn">
+                Analyze Resume
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

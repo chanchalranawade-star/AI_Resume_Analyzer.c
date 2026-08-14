@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Preview</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-card history-card">
+
+        <img src="{{ url_for('static', filename='images/resume4.png') }}"
+             class="logo">
+
+        <h1>📄 Resume Preview</h1>
+
+        <p>View the uploaded resume below.</p>
+
+        <iframe
+            src="/resume/{{ record[1] }}"
+            class="resume-preview">
+        </iframe>
+
+        <br><br>
+
+        {% if from_hr %}
+
+            <a href="/hrdashboard">
+                <button class="register-btn">
+                    ⬅ Back to HR Dashboard
+                </button>
+            </a>
+
+        {% else %}
+
+            <a href="/history">
+                <button class="register-btn">
+                    ⬅ Back to History
+                </button>
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

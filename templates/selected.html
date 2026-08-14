@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Selected Candidates</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+
+<div class="login-card history-card">
+
+
+<img src="{{ url_for('static', filename='images/resume4.png') }}"
+class="logo">
+
+
+<h1>🏆 Selected Candidates</h1>
+
+<p class="subtitle">
+Final Candidate Selection Panel
+</p>
+
+
+
+<table class="history-table">
+
+
+<tr>
+
+<th>ID</th>
+<th>Resume Name</th>
+<th>Score</th>
+<th>Rating</th>
+<th>Selected For</th>
+<th>Status</th>
+
+</tr>
+
+
+
+{% for record in records %}
+
+
+<tr>
+
+
+<td>
+{{ record[0] }}
+</td>
+
+
+<td>
+<b>{{ record[1] }}</b>
+</td>
+
+
+<td>
+
+<span class="score">
+
+{{ record[2] }}%
+
+</span>
+
+</td>
+
+
+<td>
+
+<span class="rating">
+
+⭐ {{ record[5] }}
+
+</span>
+
+</td>
+
+
+<td>
+
+<b>
+{{ record[7] }}
+</b>
+
+</td>
+
+
+<td>
+
+<span class="status">
+
+✅ Selected
+
+</span>
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</table>
+
+
+
+<br><br>
+
+
+
+<a href="/hrdashboard">
+
+<button class="back-btn">
+
+⬅ Back to HR Dashboard
+
+</button>
+
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</body>
+
+
+</html>

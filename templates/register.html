@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AI Resume Analyzer</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <img src="{{ url_for('static', filename='images/resume2.png') }}" alt="AI Logo" class="logo">
+
+            <h1>Create Account</h1>
+
+            <p>Join AI Resume Analyzer and get smart career recommendations.</p>
+
+            <form action="/register_user" method="POST">
+
+    <input type="text"
+           name="name"
+           placeholder="👤 Full Name"
+           class="input-box"
+           required>
+
+    <input type="email"
+           name="email"
+           placeholder="📧 Email Address"
+           class="input-box"
+           required>
+
+    <input type="password"
+           name="password"
+           placeholder="🔒 Password"
+           class="input-box"
+           required>
+
+    <input type="password"
+           placeholder="🔐 Confirm Password"
+           class="input-box"
+           required>
+
+    <button type="submit" class="register-btn">
+        Create Account
+    </button>
+
+</form>
+
+            <p class="register-link">
+                Already have an account?
+                <a href="/login">Login</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

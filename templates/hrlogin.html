@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Login</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <img src="{{ url_for('static', filename='images/resume4.png') }}"
+             class="logo">
+
+        <h1>👨‍💼 HR Login</h1>
+
+        <p>Only HR can access Candidate Selection Panel</p>
+
+        <form action="/hrlogin" method="POST">
+
+            <input
+                type="text"
+                name="username"
+                class="input-box"
+                placeholder="Username"
+                required
+            >
+
+            <input
+                type="password"
+                name="password"
+                class="input-box"
+                placeholder="Password"
+                required
+            >
+
+            <br><br>
+
+            <button class="login-btn">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Select Candidate</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+<div class="login-card">
+
+<h1>👨‍💼 Candidate Selection</h1>
+
+<p>Select Job Role</p>
+
+<form action="/save_selection/{{ id }}" method="POST">
+
+<label>
+
+<input type="radio"
+name="job"
+value="Python Developer"
+required>
+
+Python Developer
+
+</label>
+
+<br><br>
+
+<label>
+
+<input type="radio"
+name="job"
+value="Java Developer">
+
+Java Developer
+
+</label>
+
+<br><br>
+
+<label>
+
+<input type="radio"
+name="job"
+value="Frontend Developer">
+
+Frontend Developer
+
+</label>
+
+<br><br>
+
+<label>
+
+<input type="radio"
+name="job"
+value="Backend Developer">
+
+Backend Developer
+
+</label>
+
+<br><br>
+
+<button class="register-btn">
+
+Confirm Selection
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+</html>
