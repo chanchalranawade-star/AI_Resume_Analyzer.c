@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Resume Analyzer</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
     <div class="container">
 
-        <img src="{{ url_for('static', filename='images/resume.png') }}" alt="Resume Image" width="150">
+        <img src="{{ url_for('static', filename='images/resume.png') }}"
+             alt="Resume Image"
+             width="150">
 
         <h1>AI Resume Analyzer</h1>
 
@@ -22,24 +27,19 @@
 
         <div class="button-container">
 
+            <!-- Only Login on Home Page -->
             <a href="/login">
                 <button class="btn">Login</button>
             </a>
 
-            <a href="/register">
-                <button class="btn">Register</button>
-            </a>
-             <a href="/dashboard">
-                <button class="btn">Dashboard</button>
-
-             </a>
-        <a href="/result">
-            <button class="btn">Result</button>
-            <footer>
-    <p>© 2026 AI Resume Analyzer and Job recommendations | Developed by Chanchal Ranawade  and Jayashri Taskar </p>
-</footer>
-
         </div>
+
+        <footer>
+            <p>
+                © 2026 AI Resume Analyzer and Job Recommendations |
+                Developed by Chanchal Ranawade and Jayashri Taskar
+            </p>
+        </footer>
 
     </div>
 
