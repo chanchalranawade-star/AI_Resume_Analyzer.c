@@ -970,3 +970,96 @@ footer{
     }
 
 }
+/* =========================
+   PROFESSIONAL HOME PAGE
+   ========================= */
+
+.container {
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+
+/* Home Image */
+
+.home-image {
+    width: 350px;
+    max-width: 85%;
+    height: auto;
+    display: block;
+    margin: 10px auto 25px;
+    border-radius: 20px;
+    object-fit: contain;
+}
+
+
+/* Main Heading */
+
+.container h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+
+/* Description */
+
+.container > p {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+
+/* Login Button */
+
+.button-container {
+    margin-top: 20px;
+}
+
+.button-container .btn {
+    padding: 14px 50px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+}
+
+.button-container .btn:hover {
+    transform: translateY(-3px);
+}
+
+
+/* Footer */
+
+.container footer {
+    margin-top: 50px;
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .home-image {
+        width: 280px;
+    }
+
+    .container h1 {
+        font-size: 30px;
+    }
+
+    .container > p {
+        font-size: 16px;
+    }
+
+    .button-container .btn {
+        padding: 12px 40px;
+    }
+
+}
