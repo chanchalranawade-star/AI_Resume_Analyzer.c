@@ -4,6 +4,9 @@ from PyPDF2 import PdfReader
 from reportlab.pdfgen import canvas
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import psycopg2
 import psycopg2.extras
 app = Flask(__name__)
@@ -424,6 +427,27 @@ def hrdashboard():
     return render_template(
         'hrdashboard.html',
         records=records
+    )
+@app.route('/registered_users')
+def registered_users():
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, name, email
+        FROM users
+        ORDER BY id DESC
+    """)
+
+    users = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template(
+        "registered_users.html",
+        users=users
     )
 
 @app.route('/select/<int:id>')
