@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -8,40 +10,55 @@
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
 
     <div class="container">
 
+        <!-- Home Page Image -->
         <img src="{{ url_for('static', filename='images/resume12.png') }}"
-             alt="Resume Image"
-             width="150">
+             alt="AI Resume Analyzer"
+             class="home-image">
 
+
+        <!-- Main Heading -->
         <h1>AI Resume Analyzer</h1>
 
+
+        <!-- Description -->
         <p>
             Upload your resume and get smart job recommendations,
             resume score and skill analysis.
         </p>
 
+
+        <!-- Login Button -->
         <div class="button-container">
 
-            <!-- Only Login on Home Page -->
             <a href="/login">
-                <button class="btn">Login</button>
+                <button class="btn">
+                    🔐 Login
+                </button>
             </a>
 
         </div>
 
+
+        <!-- Footer -->
         <footer>
+
             <p>
-                © 2026 AI Resume Analyzer and Job Recommendations |
+                © 2026 AI Resume Analyzer and Job Recommendations
+                <br>
                 Developed by Chanchal Ranawade and Jayashri Taskar
             </p>
+
         </footer>
 
     </div>
 
 </body>
+
 </html>
