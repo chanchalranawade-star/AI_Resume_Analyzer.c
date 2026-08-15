@@ -17,11 +17,14 @@
 <div class="login-card history-card">
 
 <img src="{{ url_for('static', filename='images/resume4.png') }}"
-class="logo">
+     class="logo">
 
 <h1>👨‍💼 HR Dashboard</h1>
 
 <p>Candidate Selection Panel</p>
+
+
+<!-- Candidate Table -->
 
 <table class="history-table">
 
@@ -34,6 +37,7 @@ class="logo">
 
 </tr>
 
+
 {% for record in records %}
 
 <tr>
@@ -44,13 +48,16 @@ class="logo">
 
     <td>
 
-    <a href="/view/{{ record[0] }}?from=hr">
-        <button class="login-btn">
-            👁 View
-        </button>
-    </a>
+        <a href="/view/{{ record[0] }}?from=hr">
+
+            <button class="login-btn">
+                👁 View
+            </button>
+
+        </a>
 
     </td>
+
 
     <td>
 
@@ -59,39 +66,32 @@ class="logo">
         <a href="/select/{{ record[0] }}">
 
             <button class="login-btn">
-
                 ✅ Select
-
             </button>
 
         </a>
-        <a href="/registered_users" class="hr-btn">
-    👥 Registered Users
-        </a>
+
+
         <a href="/reject/{{ record[0] }}">
 
             <button class="register-btn">
-
                 ❌ Reject
-
             </button>
 
         </a>
+
 
         {% elif record[4] == "Selected" %}
 
         <span class="badge selected">
-
             ✅ Candidate Selected
-
         </span>
+
 
         {% elif record[4] == "Rejected" %}
 
         <span class="badge rejected">
-
             ❌ Candidate Rejected
-
         </span>
 
         {% endif %}
@@ -104,29 +104,54 @@ class="logo">
 
 </table>
 
+
 <br><br>
+
+
+<!-- Registered Users -->
+
+<a href="/registered_users">
+
+    <button class="login-btn">
+
+        👥 Registered Users
+
+    </button>
+
+</a>
+
+
+<br><br>
+
+
+<!-- Selected Candidates -->
 
 <a href="/selected">
 
-<button class="login-btn">
+    <button class="login-btn">
 
-Selected Candidates
+        👥 Selected Candidates
 
-</button>
+    </button>
 
 </a>
+
 
 <br><br>
 
+
+<!-- Back -->
+
 <a href="/dashboard">
 
-<button class="register-btn">
+    <button class="register-btn">
 
-Back
+        ⬅ Back
 
-</button>
+    </button>
 
 </a>
+
 
 </div>
 
