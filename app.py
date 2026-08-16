@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, send_file, redirect
+from flask import Flask, render_template, request, send_file, redirect,send_from_directory
 from PyPDF2 import PdfReader
 from reportlab.pdfgen import canvas
 from datetime import datetime
@@ -434,6 +434,12 @@ def view_resume(id):
         "view.html",
         record=record,
         from_hr=from_hr
+    )
+@app.route("/resume/<filename>")
+def resume_file(filename):
+    return send_from_directory(
+        UPLOAD_FOLDER,
+        filename
     )
 @app.route('/hrlogin', methods=['GET', 'POST'])
 def hrlogin():

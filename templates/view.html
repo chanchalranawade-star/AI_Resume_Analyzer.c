@@ -27,6 +27,16 @@
         <h1>📄 Resume Preview</h1>
 
         <p>View the uploaded resume below.</p>
+        <div style="width:100%; height:800px; margin-top:20px;">
+
+    <iframe
+        src="{{ url_for('resume_file', filename=record[1]) }}"
+        width="100%"
+        height="100%"
+        style="border:1px solid #ccc; border-radius:10px;">
+    </iframe>
+
+</div>
 
         <iframe
             src="/resume/{{ record[1] }}"
