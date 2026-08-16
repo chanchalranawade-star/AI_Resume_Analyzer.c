@@ -1,5 +1,6 @@
 
-from flask import Flask, render_template, request, send_file, redirect,send_from_directory
+from flask import Flask, render_template, request, send_file, redirect
+from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader
 from reportlab.pdfgen import canvas
 from datetime import datetime
@@ -8,9 +9,17 @@ import hashlib
 from dotenv import load_dotenv
 
 load_dotenv()
+import cloudinary
+import cloudinary.uploader
 import psycopg2
 import psycopg2.extras
 app = Flask(__name__)
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 # Database Create
 def get_db_connection():
     return psycopg2.connect(os.environ.get("DATABASE_URL"))
@@ -49,6 +58,10 @@ def init_db():
     cursor.execute("""
 ALTER TABLE resume_history
 ADD COLUMN IF NOT EXISTS resume_hash TEXT
+""")
+    cursor.execute("""
+ALTER TABLE resume_history
+ADD COLUMN IF NOT EXISTS resume_url TEXT
 """)
 
     conn.commit()
@@ -189,31 +202,13 @@ def analysis():
 def upload():
 
     file = request.files['resume']
-    filename = file.filename
+    filename = secure_filename(file.filename)
 
     file_data = file.read()
     resume_hash = hashlib.sha256(file_data).hexdigest()
     file.seek(0)
 
-    # Check if this resume was already uploaded
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute(
-        "SELECT id FROM resume_history WHERE resume_hash=%s",
-        (resume_hash,)
-    )
-
-    duplicate = cursor.fetchone()
-
-    if duplicate:
-        cursor.close()
-        conn.close()
-        return """
-        <h2>Duplicate Resume!</h2>
-        <p>This resume has already been uploaded.</p>
-        <a href="/dashboard">Go to Dashboard</a>
-        """
+    # ... तुझा duplicate check इथे ...
 
     communication = int(request.form['communication'])
     personality = int(request.form['personality'])
@@ -241,6 +236,19 @@ def upload():
         page_text = page.extract_text()
         if page_text:
             text += page_text
+
+    # Upload PDF to Cloudinary
+    upload_result = cloudinary.uploader.upload(
+        filepath,
+        resource_type="raw",
+        folder="ai_resume_analyzer/resumes"
+    )
+
+    resume_url = upload_result["secure_url"]
+
+    # Delete temporary local file
+    if os.path.exists(filepath):
+        os.remove(filepath)
 
     skill_list = [
         "Python",
@@ -346,23 +354,24 @@ def upload():
     upload_date = datetime.now().strftime("%d-%m-%Y %I:%M %p")
 
     cursor.execute(
-        """
-        INSERT INTO resume_history
-        (filename, resume_hash, score, skills, jobs, rating, upload_date, status, selected_for)
-        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """,
-        (
-            filename,
-            resume_hash,
-            score,
-            ", ".join(skills),
-            ", ".join(jobs),
-            rating,
-            upload_date,
-            status,
-            selected_for
-        )
+    """
+    INSERT INTO resume_history
+    (filename, resume_hash, resume_url, score, skills, jobs, rating, upload_date, status, selected_for)
+    VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """,
+    (
+        filename,
+        resume_hash,
+        resume_url,
+        score,
+        ", ".join(skills),
+        ", ".join(jobs),
+        rating,
+        upload_date,
+        status,
+        selected_for
     )
+)
 
     conn.commit()
     cursor.close()
@@ -437,10 +446,30 @@ def view_resume(id):
     )
 @app.route("/resume/<filename>")
 def resume_file(filename):
-    return send_from_directory(
-        UPLOAD_FOLDER,
-        filename
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT resume_url
+        FROM resume_history
+        WHERE filename=%s
+        ORDER BY id DESC
+        LIMIT 1
+        """,
+        (filename,)
     )
+
+    record = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if not record or not record[0]:
+        return "<h2>Resume not found</h2>", 404
+
+    return redirect(record[0])
 @app.route('/hrlogin', methods=['GET', 'POST'])
 def hrlogin():
 
