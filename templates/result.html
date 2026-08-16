@@ -1,12 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result - AI Resume Analyzer</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Resume Analysis Result - AI Resume Analyzer</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
@@ -15,6 +19,7 @@
 
     <div class="login-card">
 
+        <!-- Logo -->
         <img src="{{ url_for('static', filename='images/resume4.png') }}"
              alt="AI Logo"
              class="logo">
@@ -23,175 +28,357 @@
 
         <p>Your AI-powered resume evaluation report.</p>
 
-        <!-- Resume Score -->
+
+        <!-- ================= RESUME SCORE ================= -->
+
         <div class="result-box">
 
-            <h2>Resume Score</h2>
+            <h2>🎯 Resume Score</h2>
 
             <div class="score">
-                {{ score }}%
+                {{ score|default(0) }}%
             </div>
 
         </div>
+
+
+        <!-- ================= HR ASSESSMENT ================= -->
+
         <div class="result-box">
 
-    <h2>📊 HR Interview Assessment Report</h2>
+            <h2>📊 HR Interview Assessment Report</h2>
 
-    <table border="1" width="100%" cellpadding="10">
+            <table border="1"
+                   width="100%"
+                   cellpadding="10"
+                   cellspacing="0">
 
-        <tr>
-            <th>Category</th>
-            <th>Marks</th>
-        </tr>
+                <tr>
+                    <th>Category</th>
+                    <th>Marks</th>
+                </tr>
 
-        <tr>
-            <td>Communication</td>
-            <td>{{ communication }}/10</td>
-        </tr>
 
-        <tr>
-            <td>Personality</td>
-            <td>{{ personality }}/10</td>
-        </tr>
+                <!-- Communication -->
 
-        <tr>
-            <td>Logical Thinking</td>
-            <td>{{ logical }}/10</td>
-        </tr>
+                <tr>
+                    <td>Communication</td>
 
-        <tr>
-            <td>Language Skills</td>
-            <td>{{ language_marks }}/10</td>
-        </tr>
+                    <td>
+                        {{ communication|default(0) }} / 10
+                    </td>
+                </tr>
 
-        <tr>
-            <td>Technical Skills</td>
-            <td>{{ technical_marks }}/30</td>
-        </tr>
 
-        <tr>
-            <td>Job Readiness</td>
-            <td>{{ job_marks }}/30</td>
-        </tr>
+                <!-- Personality -->
 
-        <tr style="background:#0d6efd;color:white;font-weight:bold;">
-            <td>Total Score</td>
-            <td>{{ score }}/100</td>
-        </tr>
+                <tr>
+                    <td>Personality</td>
 
-        <tr style="background:#28a745;color:white;font-weight:bold;">
-            <td>Rating</td>
-            <td>{{ rating }}</td>
-        </tr>
+                    <td>
+                        {{ personality|default(0) }} / 10
+                    </td>
+                </tr>
 
-    </table>
 
-</div>
-<div class="result-box">
+                <!-- Logical Thinking -->
 
-    <h2>Uploaded Resume</h2>
+                <tr>
+                    <td>Logical Thinking</td>
 
-    <p>{{ filename }}</p>
+                    <td>
+                        {{ logical|default(0) }} / 10
+                    </td>
+                </tr>
 
-</div>
-        <!-- Skills -->
-        <div class="result-box">
 
-            <h2>Detected Skills</h2>
+                <!-- Language Skills -->
 
-            <p>
-                {% for skill in skills %}
-                    ✔ {{ skill }}<br>
-                {% endfor %}
-            </p>
+                <tr>
+                    <td>Language Skills</td>
 
-        </div>
-<div class="result-box">
+                    <td>
+                        {{ language_marks|default(0) }} / 10
+                    </td>
+                </tr>
 
-    <h2>Weak Skills / Missing Skills</h2>
 
-    <p>
-        {% for skill in weaknesses %}
-            ✖ {{ skill }}<br>
-        {% endfor %}
-    </p>
+                <!-- Technical Skills -->
 
-</div>
-<div class="result-box">
+                <tr>
+                    <td>Technical Skills</td>
 
-    <h2>Total Skills Found</h2>
+                    <td>
+                        {{ technical_marks|default(0) }} / 30
+                    </td>
+                </tr>
 
-    <p>{{ skills|length }}</p>
 
-</div>
-<div class="result-box">
+                <!-- Job Readiness -->
 
-    <h2>Resume Rating</h2>
+                <tr>
+                    <td>Job Readiness</td>
 
-    <div class="rating">
-        {{ rating }}
-    </div>
+                    <td>
+                        {{ job_marks|default(0) }} / 30
+                    </td>
+                </tr>
 
-</div>
-        <!-- Strengths -->
-        <div class="result-box">
 
-            <h2>Strengths</h2>
+                <!-- Total Score -->
 
-            <p>
-                {% for strength in strengths %}
-                    ✔ {{ strength }}<br>
-                {% endfor %}
-            </p>
+                <tr style="font-weight:bold;">
 
-        </div>
+                    <td>Total Score</td>
 
-        <!-- Suggestions -->
-        <div class="result-box">
+                    <td>
+                        {{ score|default(0) }} / 100
+                    </td>
 
-            <h2>AI Suggestions</h2>
+                </tr>
 
-            <p>
-                {% for suggestion in suggestions %}
-                    ➤ {{ suggestion }}<br>
-                {% endfor %}
-            </p>
+
+                <!-- Rating -->
+
+                <tr style="font-weight:bold;">
+
+                    <td>Rating</td>
+
+                    <td>
+                        {{ rating|default("Not Available") }}
+                    </td>
+
+                </tr>
+
+            </table>
 
         </div>
 
-        <!-- Recommended Jobs -->
+
+        <!-- ================= UPLOADED RESUME ================= -->
+
         <div class="result-box">
 
-            <h2>Recommended Jobs</h2>
+            <h2>📄 Uploaded Resume</h2>
 
             <p>
-                {% for job in jobs %}
-                    💼 {{ job }}<br>
-                {% endfor %}
+                {{ filename|default("Resume") }}
             </p>
 
         </div>
+
+
+        <!-- ================= DETECTED SKILLS ================= -->
+
+        <div class="result-box">
+
+            <h2>🧠 Detected Skills</h2>
+
+            <p>
+
+                {% if skills %}
+
+                    {% for skill in skills %}
+
+                        ✔ {{ skill }}<br>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    No skills detected.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= WEAK SKILLS ================= -->
+
+        <div class="result-box">
+
+            <h2>⚠️ Weak Skills / Missing Skills</h2>
+
+            <p>
+
+                {% if weaknesses %}
+
+                    {% for skill in weaknesses %}
+
+                        ✖ {{ skill }}<br>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    No major missing skills detected.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= TOTAL SKILLS ================= -->
+
+        <div class="result-box">
+
+            <h2>📌 Total Skills Found</h2>
+
+            <p>
+
+                {{ skills|length if skills else 0 }}
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= RESUME RATING ================= -->
+
+        <div class="result-box">
+
+            <h2>⭐ Resume Rating</h2>
+
+            <div class="rating">
+
+                {{ rating|default("Not Available") }}
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= STRENGTHS ================= -->
+
+        <div class="result-box">
+
+            <h2>💪 Strengths</h2>
+
+            <p>
+
+                {% if strengths %}
+
+                    {% for strength in strengths %}
+
+                        ✔ {{ strength }}<br>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    No strengths detected.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= AI SUGGESTIONS ================= -->
+
+        <div class="result-box">
+
+            <h2>💡 AI Suggestions</h2>
+
+            <p>
+
+                {% if suggestions %}
+
+                    {% for suggestion in suggestions %}
+
+                        ➤ {{ suggestion }}<br>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    No suggestions available.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= RECOMMENDED JOBS ================= -->
+
+        <div class="result-box">
+
+            <h2>💼 Recommended Jobs</h2>
+
+            <p>
+
+                {% if jobs %}
+
+                    {% for job in jobs %}
+
+                        💼 {{ job }}<br>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    No suitable jobs found.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- ================= DOWNLOAD PDF ================= -->
+
         <a href="/download_report">
-    <button class="register-btn">
-        📄 Download PDF Report
-    </button>
-</a>
 
-<br><br>
-        <a href="/dashboard">
             <button class="register-btn">
-                Back to Dashboard
+
+                📄 Download PDF Report
+
             </button>
+
         </a>
 
+
+        <br><br>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <a href="/dashboard">
+
+            <button class="register-btn">
+
+                🏠 Back to Dashboard
+
+            </button>
+
+        </a>
+
+
         <p class="register-link">
+
             Want to analyze another resume?
-            <a href="/dashboard">Upload Again</a>
+
+            <a href="/dashboard">
+
+                Upload Again
+
+            </a>
+
         </p>
+
 
     </div>
 
 </div>
 
 </body>
+
 </html>

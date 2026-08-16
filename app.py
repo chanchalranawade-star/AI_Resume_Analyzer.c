@@ -4,6 +4,7 @@ from PyPDF2 import PdfReader
 from reportlab.pdfgen import canvas
 from datetime import datetime
 import os
+import hashlib
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -35,6 +36,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS resume_history(
         id SERIAL PRIMARY KEY,
         filename TEXT,
+        resume_hash TEXT,
         score INTEGER,
         skills TEXT,
         jobs TEXT,
@@ -44,6 +46,10 @@ def init_db():
         selected_for TEXT DEFAULT '-'
     )
     """)
+    cursor.execute("""
+ALTER TABLE resume_history
+ADD COLUMN IF NOT EXISTS resume_hash TEXT
+""")
 
     conn.commit()
     cursor.close()
@@ -185,6 +191,30 @@ def upload():
     file = request.files['resume']
     filename = file.filename
 
+    file_data = file.read()
+    resume_hash = hashlib.sha256(file_data).hexdigest()
+    file.seek(0)
+
+    # Check if this resume was already uploaded
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT id FROM resume_history WHERE resume_hash=%s",
+        (resume_hash,)
+    )
+
+    duplicate = cursor.fetchone()
+
+    if duplicate:
+        cursor.close()
+        conn.close()
+        return """
+        <h2>Duplicate Resume!</h2>
+        <p>This resume has already been uploaded.</p>
+        <a href="/dashboard">Go to Dashboard</a>
+        """
+
     communication = int(request.form['communication'])
     personality = int(request.form['personality'])
     logical = int(request.form['logical'])
@@ -194,7 +224,19 @@ def upload():
 
     reader = PdfReader(filepath)
 
+    # Check if PDF is password protected
+    if reader.is_encrypted:
+        try:
+            reader.decrypt("")
+        except Exception:
+            return """
+            <h2>❌ Password Protected PDF</h2>
+            <p>Please upload a PDF that is not password protected.</p>
+            <a href="/analysis">Upload Another Resume</a>
+            """
+
     text = ""
+
     for page in reader.pages:
         page_text = page.extract_text()
         if page_text:
@@ -290,10 +332,14 @@ def upload():
         rating = "Average"
     else:
         rating = "Needs Improvement"
-
+    print("COMMUNICATION:", communication)
+    print("PERSONALITY:", personality)
+    print("LOGICAL:", logical)
+    print("LANGUAGE:", language_marks)
+    print("TECHNICAL:", technical_marks)
+    print("JOB:", job_marks)
     status = "Pending"
     selected_for = "-"
-
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -302,11 +348,12 @@ def upload():
     cursor.execute(
         """
         INSERT INTO resume_history
-        (filename, score, skills, jobs, rating, upload_date, status, selected_for)
-        VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
+        (filename, resume_hash, score, skills, jobs, rating, upload_date, status, selected_for)
+        VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)
         """,
         (
             filename,
+            resume_hash,
             score,
             ", ".join(skills),
             ", ".join(jobs),
@@ -428,6 +475,8 @@ def hrdashboard():
         'hrdashboard.html',
         records=records
     )
+
+
 @app.route('/registered_users')
 def registered_users():
 
@@ -446,7 +495,7 @@ def registered_users():
     conn.close()
 
     return render_template(
-        "registered_users.html",
+        'registered_users.html',
         users=users
     )
 
@@ -553,29 +602,6 @@ def download_report():
     return send_file(
         pdf_file,
         as_attachment=True
-    )
-# Result Page
-@app.route('/result')
-def result():
-    return render_template(
-        'result.html',
-        score=85,
-        skills=["Python","HTML","CSS","Flask","SQL"],
-        strengths=[
-            "Good technical knowledge",
-            "Projects are mentioned",
-            "Proper resume structure"
-        ],
-        suggestions=[
-            "Add more certifications",
-            "Improve project descriptions",
-            "Add LinkedIn / GitHub Profile"
-        ],
-        jobs=[
-            "Python Developer",
-            "Web Developer",
-            "Backend Developer"
-        ]
     )
 
     return render_template("view.html", record=record)
